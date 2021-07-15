@@ -1,0 +1,12 @@
+grant codeBase "file:-" {
+  permission java.net.SocketPermission "*:1-", "connect,resolve";
+
+  permission java.util.PropertyPermission "file.separator", "read";
+  permission java.util.PropertyPermission "javax.net.ssl.trustStore", "read, write";
+  permission java.util.PropertyPermission "javax.net.ssl.trustStorePassword", "read, write";
+  permission java.util.PropertyPermission "javax.net.ssl.keyStore", "read, write";
+  permission java.util.PropertyPermission "javax.net.ssl.keyStorePassword", "read, write";
+
+  permission java.io.FilePermission "<<ALL FILES>>", "read";
+  permission java.io.FilePermission "users${/}-", "write";
+};

@@ -41,18 +41,24 @@ Existe também a keystore do servidor, `keystore.server`, na root do projeto. To
 A execução dos ficheiros *.jar*, presentes na root do projeto, em conjunto com o ficheiro *.policy* respetivo é feita a partir dos seguintes comandos:
 
 - **Servidor:**
+  
   $ java -Djava.security.manager -Djava.security.policy=server.policy -jar SeiTchizServer.jar <porto><keystore><keystore.password>
 
 - **Cliente:**
+  
   $ java -Djava.security.manager -Djava.security.policy=client.policy -jar SeiTchiz.jar <serverAddress> <truststore> <keystore> <keystore.password> <ClientID>
 
 ### Exemplos de execução
 
 De seguida apresentamos alguns comandos que servirão de exemplos de execução do projeto, utilizando os clientes previamente definidos:
 
-- **Servidor:** $ java -Djava.security.manager -Djava.security.policy=server.policy -jar SeiTchizServer.jar 45678 keystore.server 123456
+- **Servidor:** 
+  
+  $ java -Djava.security.manager -Djava.security.policy=server.policy -jar SeiTchizServer.jar 45678 keystore.server 123456
 
-- **Clientes:** $ java -Djava.security.manager -Djava.security.policy=client.policy -jar SeiTchiz.jar localhost:45678 truststore.client users/abc/abc.client 123456 abc
+- **Clientes:** 
+  
+  $ java -Djava.security.manager -Djava.security.policy=client.policy -jar SeiTchiz.jar localhost:45678 truststore.client users/abc/abc.client 123456 abc
 
   $ java -Djava.security.manager -Djava.security.policy=client.policy -jar SeiTchiz.jar localhost:45678 truststore.client users/abc2/abc2.client 123456 abc2
 
@@ -66,11 +72,13 @@ De seguida apresentamos alguns comandos que servirão de exemplos de execução 
 
 ## Decisões de Design
 
-O enunciado do projeto especificava  que  cada  cliente  iria  ter uma *truststore* com todas as chaves de todos  os  clientes,  e  também do servidor. Decidimos, por uma questão de simplificação, criar apenas uma *truststore*, a ser utilizada  pelo servidor e pelos  clientes, com todas as chaves de  todos  os participantes.
+O enunciado do projeto especificava que cada cliente iria ter uma *truststore* com todas as chaves de todos os clientes, e também do servidor. Decidimos, por uma questão de simplificação, criar apenas uma *truststore*, a ser utilizada pelo servidor e pelos clientes, com todas as chaves de todos os participantes.
 
-A encriptação do ficheiro `users.txt`, utilizado pelo servidor no processo de autenticação do cliente, é feita a partir de uma **chave simétrica** AES, criada na primeira  utilização  do  método autenticar (quando `users.txt` é criado pela primeira  vez) e guardada num ficheiro à parte, `keyfile.txt`. De  maneira a esta chave não ser guardada em claro, ela mesmo é encriptada com a chave pública do servidor e é assim escrita em `keyfile.txt`, e quando necessário é desencriptada com a chave privada do servidor.
+A encriptação do ficheiro `users.txt`, utilizado pelo servidor no processo de autenticação do cliente, é feita a partir de uma **chave simétrica** AES, criada na primeira utilização do método autenticar (quando `users.txt` é criado pela primeira vez) e guardada num ficheiro à parte, `keyfile.txt`. De maneira a esta chave não ser guardada em claro, ela mesmo é encriptada com a chave pública do servidor e é assim escrita em `keyfile.txt`, e quando necessário é desencriptada com a chave privada do servidor.
 
-O ficheiro `cliente.policy`  especifica  que  o cliente  tem  permissão de read para  todos  os  ficheiro  no  sistema.  Isto deve-se ao facto de na utilização do comando *post* da  aplicação *SeiTchiz*,  entendemos  que  seria  possível  fornecer uma fotografia que estaria presente em qualquer lugar do sistema.
+O ficheiro `cliente.policy` especifica que o cliente tem permissão de read para todos os ficheiro no sistema. Isto deve-se ao facto do comando *post* da aplicação *SeiTchiz*, onde entendemos que seria possível fornecer uma fotografia que estaria presente em qualquer lugar do sistema.
+  
+---
 
 ## Autores
 
